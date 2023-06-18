@@ -5,20 +5,35 @@ import java.time.LocalDateTime;
 public class Mensagem {
 	private int id;
 	private String texto;
-	private Participante participante; //está correto?
+	private Participante emitente;
+	private Participante destinatario;
 	private LocalDateTime datahora;
-
-	public Mensagem(int id, String texto, LocalDateTime datahora) {
-		//super();
+	
+	public Mensagem(int id, String texto, Participante emitente, Participante destinatario, LocalDateTime datahora) {
 		this.id = id;
 		this.texto = texto;
+		this.emitente = emitente;
+		this.destinatario = destinatario;
 		this.datahora = datahora;
 	}
-	
-	//Para adicionar participante, chamado no repositorio
-	public void setParticipante(Participante participante) {
-		this.participante = participante;
-	}
-	
 
+	public int getId() {
+		return id;
+	}
+
+	public String getTexto() {
+		return texto;
+	}
+
+	public Participante getEmitente() {
+		return emitente;
+	}
+
+	public Participante getDestinatario() {
+		return destinatario;
+	}
+
+	public LocalDateTime getDatahora() {
+		return datahora;
+	}
 }

@@ -3,25 +3,47 @@ package modelo;
 import java.util.ArrayList;
 
 public class Participante {
-	
 	private String nome;
-	private ArrayList<Mensagem> recebidas = new ArrayList<Mensagem>();
-	private ArrayList<Mensagem> enviadas = new ArrayList<Mensagem>();
+	private ArrayList<Mensagem> recebidas = new ArrayList<>();
+	private ArrayList<Mensagem> enviadas = new ArrayList<>();
 
-	public Participante(String nome){
+	public Participante(String nome) {
 		this.nome = nome;
 	}
 	
 	//Para adicionar uma mensagem recebida
-	public void adicionar(Mensagem mr){
+	public void addRecebida(Mensagem mr) {
 		recebidas.add(mr);
-		mr.setParticipante(this);
 	}
 	
 	//Para remover uma mensagem recebida
-	public void remover(Mensagem mr){
+	public void delRecebida(Mensagem mr) {
 		recebidas.remove(mr);
-		mr.setParticipante(null);
 	}
 	
+	//Para adicionar uma mensagem enviada
+	public void addEnviada(Mensagem me) {
+		enviadas.add(me);
+	}
+	
+	//Para remover uma mensagem enviada
+	public void delEnviada(Mensagem me) {
+		enviadas.remove(me);
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public ArrayList<Mensagem> getRecebidas() {
+		return recebidas;
+	}
+
+	public ArrayList<Mensagem> getEnviadas() {
+		return enviadas;
+	}
 }

@@ -1,19 +1,17 @@
+
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Programa√ß√£o Orientada a Objetos
- * Prof. Fausto Maranh√£o Ayres
+ * ProgramaÁ„o Orientada a Objetos
+ * Prof. Fausto Maranh„o Ayres
  **********************************/
 
-package repositorio;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.Scanner;
 
-import modelo.Participante;
-import regras_negocio.Individual;
 
-import java.util.ArrayList;
 
 public class Repositorio {
 	
@@ -114,7 +112,7 @@ public class Repositorio {
 
 
 	public void	salvarObjetos()  {
-		//gravar nos arquivos csv os objetos que est√£o no reposit√≥rio
+		//gravar nos arquivos csv os objetos que est„o no repositÛrio
 		try	{
 			File f = new File( new File(".\\mensagens.csv").getCanonicalPath())  ;
 			FileWriter arquivo1 = new FileWriter(f); 
@@ -127,7 +125,7 @@ public class Repositorio {
 			arquivo1.close();
 		}
 		catch(Exception e){
-			throw new RuntimeException("problema na cria√ß√£o do arquivo  mensagens "+e.getMessage());
+			throw new RuntimeException("problema na criaÁ„o do arquivo  mensagens "+e.getMessage());
 		}
 
 		try	{
@@ -139,7 +137,7 @@ public class Repositorio {
 			arquivo2.close();
 		}
 		catch (Exception e) {
-			throw new RuntimeException("problema na cria√ß√£o do arquivo  individuos "+e.getMessage());
+			throw new RuntimeException("problema na criaÁ„o do arquivo  individuos "+e.getMessage());
 		}
 
 		try	{
@@ -154,8 +152,8 @@ public class Repositorio {
 			arquivo3.close();
 		}
 		catch (Exception e) {
-			throw new RuntimeException("problema na cria√ß√£o do arquivo  grupos "+e.getMessage());
+			throw new RuntimeException("problema na criaÁ„o do arquivo  grupos "+e.getMessage());
 		}
 	}
-
 }
+

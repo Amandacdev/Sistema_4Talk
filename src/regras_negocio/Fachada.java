@@ -1,4 +1,3 @@
-package regras_negocio;
 
 import java.util.ArrayList;
 import java.util.Collections;
