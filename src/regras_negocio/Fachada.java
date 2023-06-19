@@ -88,19 +88,59 @@ public class Fachada {
 	}
 
 	public static void inserirGrupo(String nomeindividuo, String nomegrupo) throws  Exception {
-		//localizar nomeindividuo no repositorio
-		//localizar nomegrupo no repositorio
-		//verificar se individuo nao esta no grupo	
-		//adicionar individuo com o grupo e vice-versa
+		//Verifica se o indivíduo existe
+		Individual ind = repositorio.localizarIndividuo(nomeindividuo);
+		if(ind == null) 
+			throw new Exception("inserir Grupo - individuo não existe:" + nomeindividuo);
+		
+		//Verifica se o grupo existe
+		Grupo g = repositorio.localizarGrupo(nomegrupo);
+		if(g == null) 
+			throw new Exception("inserir Grupo - grupo não existe:" + nomegrupo);
+		
+		//Obtendo a lista de indivíduos do grupo
+		ArrayList<Individual>individuos = g.getIndividuos();
+		
+		//Verifica se o indivíduo já está no grupo
+		for(Individual ind2 : individuos){
+			if((ind2.getNome()).equals(nomeindividuo))
+				throw new Exception("inserir Grupo - individuo já está no grupo:");
+		}
+		
+		//Insere o indivíduo ind na lista de indivíduos grupo g
+		g.addIndividual(ind);
+		
+		//Insere o grupo g na lista de grupos do indivíduo ind
+		ind.addGrupo(g);
+
 	}
 
 	public static void removerGrupo(String nomeindividuo, String nomegrupo) throws  Exception {
-		//localizar nomeindividuo no repositorio
-		//localizar nomegrupo no repositorio
-		//verificar se individuo ja esta no grupo	
-		//remover individuo com o grupo e vice-versa
+		//Verifica se o indivíduo existe
+		Individual ind = repositorio.localizarIndividuo(nomeindividuo);
+		if(ind == null) 
+			throw new Exception("remover Grupo - individuo não existe:" + nomeindividuo);
+		
+		//Verifica se o grupo existe
+		Grupo g = repositorio.localizarGrupo(nomegrupo);
+		if(g == null) 
+			throw new Exception("remover Grupo - grupo não existe:" + nomegrupo);
+		
+		//Obtendo a lista de indivíduos do grupo
+		ArrayList<Individual>individuos = g.getIndividuos();
+		
+		//Verifica se o indivíduo não está no grupo
+		for(Individual ind2 : individuos){
+			if(!ind2.getNome().equals(nomeindividuo))
+				throw new Exception("inserir Grupo - individuo não está no grupo:");
+		}
+	
+		//Remove o indivíduo ind da lista de indivíduos grupo g
+		g.delIndividual(ind);
+		
+		//Remove o grupo g da lista de grupos do indivíduo ind
+		ind.delGrupo(g);
 	}
-
 
 	public static void criarMensagem(String nomeemitente, String nomedestinatario, String texto) throws Exception{
 		if(texto.isEmpty()) 
