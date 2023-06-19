@@ -24,53 +24,77 @@ public class Fachada {
 		return repositorio.getGrupos();
 	}
 	
+	public static ArrayList<Mensagem> listarMensagens() {
+		return repositorio.getMensagens();
+	}
+	
 	public static ArrayList<Mensagem> listarMensagensEnviadas(String nome) throws Exception {
-		Participante p = repositorio.localizarParticipante(nome);	
-		if(p == null) 
-			throw new Exception("listar  mensagens enviadas - nome nao existe:" + nome);
+		Individual ind = repositorio.localizarIndividuo(nome);	
+		if(ind == null) 
+			throw new Exception("listar mensagens enviadas - individuo nao existe:" + nome);
 		
-		if(p instanceof Grupo)
-
 		return ind.getEnviadas();	
 	}
 
-	public static ArrayList<Mensagem> listarMensagensRecebidas(String nome) throws Exception{
+	public static ArrayList<Mensagem> listarMensagensRecebidas(String nome) throws Exception {
+		Individual ind = repositorio.localizarIndividuo(nome);	
+		if(ind == null) 
+			throw new Exception("listar mensagens recebidas - individuo nao existe:" + nome);
 		
+		return ind.getRecebidas();	
 	}
 
-	public static void criarIndividuo(String nome, String senha) throws  Exception{
+	public static void criarIndividuo(String nome, String senha) throws  Exception {
 		if(nome.isEmpty()) 
 			throw new Exception("criar individual - nome vazio:");
 		if(senha.isEmpty()) 
 			throw new Exception("criar individual - senha vazia:");
 		
-		Participante p = repositorio.localizarParticipante(nome);	
-		if(p != null) 
-			throw new Exception("criar individual - nome ja existe:" + nome);
+		Individual ind = repositorio.localizarIndividuo(nome);	
+		if(ind != null) 
+			throw new Exception("criar individual - individuo ja existe:" + nome);
 
 
-		Individual individuo = new Individual(nome,senha, false);
-		repositorio.adicionar(individuo);		
+		Individual novoInd = new Individual(nome,senha, false);
+		repositorio.addParticipante(novoInd);		
 	}
 
 	public static void criarAdministrador(String nome, String senha) throws  Exception{
-		//...
+		if(nome.isEmpty()) 
+			throw new Exception("criar administrador - nome vazio:");
+		if(senha.isEmpty()) 
+			throw new Exception("criar administrador - senha vazia:");
+		
+		Individual ind = repositorio.localizarIndividuo(nome);	
+		if(ind != null) 
+			throw new Exception("criar administrador - individuo ja existe:" + nome);
+
+
+		Individual novoAdm = new Individual(nome,senha, true);
+		repositorio.addParticipante(novoAdm);	
 	}
 
 
-	public static void criarGrupo(String nome) throws  Exception{
-		//localizar nome no repositorio
-		//criar o grupo	
+	public static void criarGrupo(String nome) throws  Exception {
+		if(nome.isEmpty()) 
+			throw new Exception("criar grupo - nome vazio:");
+		
+		Grupo g = repositorio.localizarGrupo(nome);	
+		if(g != null) 
+			throw new Exception("criar grupo - grupo ja existe:" + nome);
+		
+		Grupo grupo = new Grupo(nome);
+		repositorio.addParticipante(grupo);
 	}
 
-	public static void inserirGrupo(String nomeindividuo, String nomegrupo) throws  Exception{
+	public static void inserirGrupo(String nomeindividuo, String nomegrupo) throws  Exception {
 		//localizar nomeindividuo no repositorio
 		//localizar nomegrupo no repositorio
 		//verificar se individuo nao esta no grupo	
 		//adicionar individuo com o grupo e vice-versa
 	}
 
-	public static void removerGrupo(String nomeindividuo, String nomegrupo) throws  Exception{
+	public static void removerGrupo(String nomeindividuo, String nomegrupo) throws  Exception {
 		//localizar nomeindividuo no repositorio
 		//localizar nomegrupo no repositorio
 		//verificar se individuo ja esta no grupo	

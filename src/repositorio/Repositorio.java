@@ -15,10 +15,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.TreeMap;
 
-import modelo.Grupo;
-import modelo.Individual;
-import modelo.Mensagem;
-import modelo.Participante;
+import modelo.*;
 
 
 
@@ -64,8 +61,30 @@ public class Repositorio {
 		return grupos;
 	}
 	
-	public Participante localizarParticipante(String nome) {
-		return participantes.get(nome);
+	public ArrayList<Mensagem> getMensagens() {
+		ArrayList<Mensagem> mens = new ArrayList<>();
+		for(Mensagem m : mensagens.values()) {
+			mens.add(m);
+		}
+		return mens;
+	}
+	
+	public Individual localizarIndividuo(String nome) {
+		Participante p = participantes.get(nome);
+		if (p instanceof Individual) {
+			Individual ind = (Individual) p;
+			return ind;
+		}
+		return null;
+	}
+	
+	public Grupo localizarGrupo(String nome) {
+		Participante p = participantes.get(nome);
+		if (p instanceof Grupo) {
+			Grupo g = (Grupo) p;
+			return g;
+		}
+		return null;
 	}
 	
 	public void carregarObjetos()  	{

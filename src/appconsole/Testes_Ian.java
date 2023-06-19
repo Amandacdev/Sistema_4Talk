@@ -47,7 +47,7 @@ public class Testes_Ian {
 		
 		
 		for (Participante p : participantes.values()) {
-			if (p instanceof Individual) {
+			if (p instanceof Grupo) {
 				System.out.println(p.getNome());
 			}
 		}
