@@ -21,7 +21,7 @@ public class Individual extends Participante {
 		this.senha = senha;
 	}
 
-	public boolean isAdministrador() {
+	public boolean getAdministrador() {
 		return administrador;
 	}
 

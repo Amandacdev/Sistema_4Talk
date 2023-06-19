@@ -1,19 +1,72 @@
 
 /**********************************
  * IFPB - Curso Superior de Tec. em Sist. para Internet
- * Programação Orientada a Objetos
- * Prof. Fausto Maranhão Ayres
+ * Programaï¿½ï¿½o Orientada a Objetos
+ * Prof. Fausto Maranhï¿½o Ayres
  **********************************/
 
+package repositorio;
 
 import java.io.File;
 import java.io.FileWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.TreeMap;
+
+import modelo.Grupo;
+import modelo.Individual;
+import modelo.Mensagem;
+import modelo.Participante;
 
 
 
 public class Repositorio {
+	private TreeMap<String, Participante> participantes = new TreeMap<>(); //Nome Ã© a chave
+	private	TreeMap<Integer, Mensagem> mensagens = new TreeMap<>(); //ID Ã© a chave
+	
+	public void addParticipante(Participante p) {
+		participantes.put(p.getNome(), p);
+	}
+	
+	public void delParticipante(Participante p) {
+		participantes.remove(p.getNome());
+	}
+	
+	public void addMensagem(Mensagem m) {
+		mensagens.put(m.getId(), m);
+	}
+	
+	public void delMensagem(Mensagem m) {
+		mensagens.remove(m.getId());
+	}
+	
+	public ArrayList<Individual> getIndividuos() {
+		ArrayList<Individual> individuos = new ArrayList<>();
+		for (Participante p : participantes.values()) {
+			if (p instanceof Individual) {
+				Individual ind = (Individual) p;
+				individuos.add(ind);
+			}
+		}
+		return individuos;
+	}
+	
+	public ArrayList<Grupo> getGrupos() {
+		ArrayList<Grupo> grupos = new ArrayList<>();
+		for (Participante p : participantes.values()) {
+			if (p instanceof Grupo) {
+				Grupo g = (Grupo) p;
+				grupos.add(g);
+			}
+		}
+		return grupos;
+	}
+	
+	public Participante localizarParticipante(String nome) {
+		return participantes.get(nome);
+	}
 	
 	public void carregarObjetos()  	{
 		// carregar para o repositorio os objetos dos arquivos csv
@@ -49,7 +102,7 @@ public class Repositorio {
 				senha = partes[1];
 				administrador = partes[2];
 				Individual ind = new Individual(nome,senha,Boolean.parseBoolean(administrador));
-				this.adicionar(ind);
+				participantes.put(ind.getNome(), ind);
 			}
 			arquivo1.close();
 		}
@@ -71,10 +124,10 @@ public class Repositorio {
 				grupo = new Grupo(nome);
 				if(partes.length>1)
 					for(int i=1; i< partes.length; i++) {
-						individuo = this.localizarIndividual(partes[i]);
-						grupo.adicionar(individuo);
+						individuo = (Individual)participantes.get(partes[i]);
+						grupo.addIndividual(individuo);
 					}
-				this.adicionar(grupo);
+				participantes.put(grupo.getNome(), grupo);
 			}
 			arquivo2.close();
 		}
@@ -84,7 +137,7 @@ public class Repositorio {
 
 
 		try	{
-			String id, nomeemitente, nomedestinatario,texto;
+			String id, nomeemitente, nomedestinatario,texto, datahoraString;
 			Mensagem m;
 			Participante emitente,destinatario;
 			File f = new File( new File(".\\mensagens.csv").getCanonicalPath() )  ;
@@ -94,13 +147,19 @@ public class Repositorio {
 				partes = linha.split(";");	
 				//System.out.println(Arrays.toString(partes));
 				id = partes[0];
-				nomeemitente = partes[1];
-				nomedestinatario = partes[2];
-				texto = partes[3];
-				emitente = this.localizarParticipante(nomeemitente);
-				destinatario = this.localizarParticipante(nomedestinatario);
-				m = new Mensagem(Integer.parseInt(id),emitente,destinatario,texto);
-				this.adicionar(m);
+				texto = partes[1];
+				nomeemitente = partes[2];
+				nomedestinatario = partes[3];
+				datahoraString = partes[4];
+				
+				emitente = participantes.get(nomeemitente);
+				destinatario = participantes.get(nomedestinatario);
+				
+				DateTimeFormatter estruturaDatahora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+				LocalDateTime datahora = LocalDateTime.parse(datahoraString, estruturaDatahora);
+				
+				m = new Mensagem(Integer.parseInt(id), texto, emitente, destinatario, datahora);
+				mensagens.put(m.getId(), m);
 			} 
 			arquivo3.close();
 		}
@@ -112,47 +171,54 @@ public class Repositorio {
 
 
 	public void	salvarObjetos()  {
-		//gravar nos arquivos csv os objetos que estão no repositório
+		//gravar nos arquivos csv os objetos que estï¿½o no repositï¿½rio
 		try	{
 			File f = new File( new File(".\\mensagens.csv").getCanonicalPath())  ;
 			FileWriter arquivo1 = new FileWriter(f); 
-			for(Mensagem m : mensagens) 	{
-				arquivo1.write(	m.getId()+";"+
+			DateTimeFormatter estruturaDatahora = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
+			for(Mensagem m : mensagens.values()) 	{
+				arquivo1.write(	m.getId()+";"+m.getTexto()+";"+
 						m.getEmitente().getNome()+";"+
 						m.getDestinatario().getNome()+";"+
-						m.getTexto()+"\n");	
+						m.getDatahora().format(estruturaDatahora)+"\n");	
 			} 
 			arquivo1.close();
 		}
 		catch(Exception e){
-			throw new RuntimeException("problema na criação do arquivo  mensagens "+e.getMessage());
+			throw new RuntimeException("problema na criaï¿½ï¿½o do arquivo  mensagens "+e.getMessage());
 		}
 
 		try	{
 			File f = new File( new File(".\\individuos.csv").getCanonicalPath())  ;
 			FileWriter arquivo2 = new FileWriter(f) ; 
-			for(Individual ind : this.getIndividuos()) {
-				arquivo2.write(ind.getNome() +";"+ ind.getSenha() +";"+ ind.getAdministrador() +"\n");	
+			for(Participante p : participantes.values()) {
+				if (p instanceof Individual) {
+					Individual ind = (Individual) p;
+					arquivo2.write(ind.getNome() +";"+ ind.getSenha() +";"+ ind.getAdministrador() +"\n");
+				}	
 			} 
 			arquivo2.close();
 		}
 		catch (Exception e) {
-			throw new RuntimeException("problema na criação do arquivo  individuos "+e.getMessage());
+			throw new RuntimeException("problema na criaï¿½ï¿½o do arquivo  individuos "+e.getMessage());
 		}
 
 		try	{
 			File f = new File( new File(".\\grupos.csv").getCanonicalPath())  ;
 			FileWriter arquivo3 = new FileWriter(f) ; 
-			for(Grupo g : this.getGrupos()) {
-				String texto="";
-				for(Individual ind : g.getIndividuos())
-					texto += ";" + ind.getNome();
-				arquivo3.write(g.getNome() + texto + "\n");	
+			for(Participante p : participantes.values()) {
+				if (p instanceof Grupo) {
+					Grupo g = (Grupo) p;
+					String texto="";
+					for(Individual ind : g.getIndividuos())
+						texto += ";" + ind.getNome();
+					arquivo3.write(g.getNome() + texto + "\n");	
+				}
 			} 
 			arquivo3.close();
 		}
 		catch (Exception e) {
-			throw new RuntimeException("problema na criação do arquivo  grupos "+e.getMessage());
+			throw new RuntimeException("problema na criaï¿½ï¿½o do arquivo  grupos "+e.getMessage());
 		}
 	}
 }

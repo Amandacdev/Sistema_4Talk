@@ -1,3 +1,4 @@
+package regras_negocio;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,17 +19,17 @@ public class Fachada {
 	public static ArrayList<Individual> listarIndividuos() {
 		return repositorio.getIndividuos();	
 	}
+	
 	public static ArrayList<Grupo> listarGrupos() {
-
+		return repositorio.getGrupos();
 	}
-	public static ArrayList<Mensagem> listarMensagens() {
-		
-	}
-
-	public static ArrayList<Mensagem> listarMensagensEnviadas(String nome) throws Exception{
-		Individual ind = repositorio.localizarIndividual(nome);	
-		if(ind == null) 
+	
+	public static ArrayList<Mensagem> listarMensagensEnviadas(String nome) throws Exception {
+		Participante p = repositorio.localizarParticipante(nome);	
+		if(p == null) 
 			throw new Exception("listar  mensagens enviadas - nome nao existe:" + nome);
+		
+		if(p instanceof Grupo)
 
 		return ind.getEnviadas();	
 	}
