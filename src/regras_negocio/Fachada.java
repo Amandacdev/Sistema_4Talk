@@ -1,5 +1,6 @@
 package regras_negocio;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.function.Predicate;
@@ -10,6 +11,17 @@ import modelo.Mensagem;
 import modelo.Participante;
 import repositorio.Repositorio;
 
+/*
+Dúvidas
+
+1 - O que conta como indivíduo/grupo ativo/não ativo?
+
+2 - Como vou devolver com o nomes ods grupos/indivíduos relacionados se os métodos retornam um array list específico de
+somente grupos e somente indivíduos?
+
+3 - É literalmente impossível adicionar ao repositório as "mensagens cópias" de uma mensagem enviada para um grupo, pois a chave
+do tree map das mensagens é o ID, elas vao se soobrescrever.
+*/
 public class Fachada {
 	private Fachada() {}
 
@@ -29,7 +41,7 @@ public class Fachada {
 	}
 	
 	public static ArrayList<Mensagem> listarMensagensEnviadas(String nome) throws Exception {
-		Individual ind = repositorio.localizarIndividuo(nome);	
+		Individual ind = repositorio.localizarIndividual(nome);	
 		if(ind == null) 
 			throw new Exception("listar mensagens enviadas - individuo nao existe:" + nome);
 		
@@ -37,11 +49,11 @@ public class Fachada {
 	}
 
 	public static ArrayList<Mensagem> listarMensagensRecebidas(String nome) throws Exception {
-		Individual ind = repositorio.localizarIndividuo(nome);	
-		if(ind == null) 
-			throw new Exception("listar mensagens recebidas - individuo nao existe:" + nome);
+		Participante p = repositorio.localizarParticipante(nome);	
+		if(p == null) 
+			throw new Exception("listar mensagens recebidas - nome nao existe:" + nome);
 		
-		return ind.getRecebidas();	
+		return p.getRecebidas();	
 	}
 
 	public static void criarIndividuo(String nome, String senha) throws  Exception {
@@ -50,12 +62,12 @@ public class Fachada {
 		if(senha.isEmpty()) 
 			throw new Exception("criar individual - senha vazia:");
 		
-		Individual ind = repositorio.localizarIndividuo(nome);	
-		if(ind != null) 
-			throw new Exception("criar individual - individuo ja existe:" + nome);
+		Participante p = repositorio.localizarParticipante(nome);	
+		if(p != null) 
+			throw new Exception("criar individual - nome ja existe:" + nome);
 
 
-		Individual novoInd = new Individual(nome,senha, false);
+		Individual novoInd = new Individual(nome, senha, false);
 		repositorio.addParticipante(novoInd);		
 	}
 
@@ -65,12 +77,12 @@ public class Fachada {
 		if(senha.isEmpty()) 
 			throw new Exception("criar administrador - senha vazia:");
 		
-		Individual ind = repositorio.localizarIndividuo(nome);	
-		if(ind != null) 
-			throw new Exception("criar administrador - individuo ja existe:" + nome);
+		Participante p = repositorio.localizarParticipante(nome);	
+		if(p != null) 
+			throw new Exception("criar administrador - nome ja existe:" + nome);
 
 
-		Individual novoAdm = new Individual(nome,senha, true);
+		Individual novoAdm = new Individual(nome, senha, true);
 		repositorio.addParticipante(novoAdm);	
 	}
 
@@ -79,17 +91,22 @@ public class Fachada {
 		if(nome.isEmpty()) 
 			throw new Exception("criar grupo - nome vazio:");
 		
-		Grupo g = repositorio.localizarGrupo(nome);	
-		if(g != null) 
-			throw new Exception("criar grupo - grupo ja existe:" + nome);
+		Participante p = repositorio.localizarParticipante(nome);	
+		if(p != null) 
+			throw new Exception("criar grupo - nome ja existe:" + nome);
 		
 		Grupo grupo = new Grupo(nome);
 		repositorio.addParticipante(grupo);
 	}
 
 	public static void inserirGrupo(String nomeindividuo, String nomegrupo) throws  Exception {
+		//localizar nomeindividuo no repositorio
+		//localizar nomegrupo no repositorio
+		//verificar se individuo nao esta no grupo	
+		//adicionar individuo com o grupo e vice-versa
+		
 		//Verifica se o indivíduo existe
-		Individual ind = repositorio.localizarIndividuo(nomeindividuo);
+		Individual ind = repositorio.localizarIndividual(nomeindividuo);
 		if(ind == null) 
 			throw new Exception("inserir Grupo - individuo não existe:" + nomeindividuo);
 		
@@ -112,12 +129,16 @@ public class Fachada {
 		
 		//Insere o grupo g na lista de grupos do indivíduo ind
 		ind.addGrupo(g);
-
 	}
 
 	public static void removerGrupo(String nomeindividuo, String nomegrupo) throws  Exception {
+		//localizar nomeindividuo no repositorio
+		//localizar nomegrupo no repositorio
+		//verificar se individuo ja esta no grupo	
+		//remover individuo com o grupo e vice-versa
+		
 		//Verifica se o indivíduo existe
-		Individual ind = repositorio.localizarIndividuo(nomeindividuo);
+		Individual ind = repositorio.localizarIndividual(nomeindividuo);
 		if(ind == null) 
 			throw new Exception("remover Grupo - individuo não existe:" + nomeindividuo);
 		
@@ -142,6 +163,7 @@ public class Fachada {
 		ind.delGrupo(g);
 	}
 
+
 	public static void criarMensagem(String nomeemitente, String nomedestinatario, String texto) throws Exception{
 		if(texto.isEmpty()) 
 			throw new Exception("criar mensagem - texto vazio:");
@@ -154,18 +176,26 @@ public class Fachada {
 		if(destinatario == null) 
 			throw new Exception("criar mensagem - destinatario nao existe:" + nomeemitente);
 
-		if(destinatario instanceof Grupo g && emitente.localizarGrupo(g.getNome())==null)
-			throw new Exception("criar mensagem - grupo nao permitido:" + nomedestinatario);
+		if(destinatario instanceof Grupo g && !emitente.pertenceGrupo(g.getNome()))
+			throw new Exception("criar mensagem - emitente não está inserido no grupo:" + nomedestinatario);
 
 
 		//cont.
 		//gerar id no repositorio para a mensagem
+		int id = repositorio.gerarID();
+		
 		//criar mensagem
+		Mensagem m = new Mensagem(id, texto, emitente, destinatario, LocalDateTime.now().withNano(0));
+		
 		//adicionar mensagem ao emitente e destinatario
+		emitente.addEnviada(m);
+		destinatario.addRecebida(m);
+		
 		//adicionar mensagem ao repositorio
-		//
+		repositorio.addMensagem(m);
+		
 		//caso destinatario seja tipo Grupo então criar copias da mensagem, tendo o grupo como emitente e cada membro do grupo como destinatario, 
-		//  usando mesmo id e texto, e adicionar essas copias no repositorio
+		//usando mesmo id e texto, e adicionar essas copias no repositorio
 		
 	}
 

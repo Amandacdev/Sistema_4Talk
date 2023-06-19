@@ -2,10 +2,12 @@ package appconsole;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.NoSuchElementException;
 import java.util.TreeMap;
 
-import modelo.*;
-import regras_negocio.Fachada;
+import modelo.Grupo;
+import modelo.Individual;
+import modelo.Participante;
 
 public class Testes_Ian {
 
@@ -19,12 +21,25 @@ public class Testes_Ian {
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss");
 		LocalDateTime dateTime = LocalDateTime.parse(s, formatter);
 		System.out.println(dateTime.format(formatter) + ";");
+		System.out.println(dateTime + "\n");
+		
+		LocalDateTime now = LocalDateTime.now().withNano(0);
+		System.out.println(now);
 		
 		TreeMap<String, Participante> participantes = new TreeMap<>(); //Nome é a chave
 		
 		Individual p2 = new Individual("Marcos", "123", false);
 		Individual p3 = new Individual("José", "123", false);
 		Individual p4 = new Individual("Mário", "123", false);
+		
+		try {
+			System.out.println();
+			System.out.println(participantes.lastKey());
+			System.out.println();	
+		} catch (NoSuchElementException ex) {
+			System.out.println("ooops");
+			System.out.println();
+		}
 		
 		participantes.put(p1.getNome(), p1);
 		participantes.put(p2.getNome(), p2);
@@ -51,6 +66,10 @@ public class Testes_Ian {
 				System.out.println(p.getNome());
 			}
 		}
+	
+		System.out.println(participantes);
+		participantes.put("Baka", g6);
+		System.out.println(participantes);
+		
 	}
-
 }

@@ -36,5 +36,13 @@ public class Individual extends Participante {
 	public void delGrupo(Grupo g) {
 		grupos.remove(g);
 	}
+	
+	public boolean pertenceGrupo(String nomeGrupo) {
+		for (Grupo g : grupos) {
+			if(g.getNome().equals(nomeGrupo))
+				return true;
+		}
+		return false;
+	}
 }
 

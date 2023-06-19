@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 import java.util.TreeMap;
 
@@ -69,7 +70,11 @@ public class Repositorio {
 		return mens;
 	}
 	
-	public Individual localizarIndividuo(String nome) {
+	public Participante localizarParticipante(String nome) {
+		return participantes.get(nome);
+	}
+	
+	public Individual localizarIndividual(String nome) {
 		Participante p = participantes.get(nome);
 		if (p instanceof Individual) {
 			Individual ind = (Individual) p;
@@ -85,6 +90,15 @@ public class Repositorio {
 			return g;
 		}
 		return null;
+	}
+	
+	public int gerarID() {
+		try {
+			int id = mensagens.lastKey() + 1;
+			return id;
+		} catch (NoSuchElementException e) {
+			return 1;
+		}
 	}
 	
 	public void carregarObjetos()  	{
