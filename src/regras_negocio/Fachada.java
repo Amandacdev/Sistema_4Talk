@@ -320,6 +320,35 @@ public class Fachada {
 	
 	public static void lerDados() {
 		repositorio.carregarObjetos();
+		
+		for(Grupo g : repositorio.getGrupos()) {           //Para cada grupo no repositorio
+			for (Individual ind : g.getIndividuos()) {     //Para cada indivíduo na lista de participantes de cada grupo
+				if(!ind.getGrupos().contains(g))           //Se o grupo ainda não se encontra na lista de grupos que aquele usuário está inserido
+					ind.addGrupo(g);                       //Adiciona o grupo a lista
+			}
+		}
+		
+		for (Mensagem m : repositorio.getMensagens()) {            //Para cada mensagem no repositorio
+			Individual emitente = (Individual) m.getEmitente();    //Pega o emitente
+			Participante destinatario = m.getDestinatario();       //Pega o destinatário
+			
+			if(!emitente.getEnviadas().contains(m))          //Se a mensagem ainda não está na lista de mensagens enviadas do emitente
+				emitente.addEnviada(m);                      //Adiciona
+			
+			if(!destinatario.getRecebidas().contains(m))     //Se a mensagem ainda não está na lista de mensagens recebidas do destinatário
+				destinatario.addRecebida(m);                 //Adiciona
+			
+			if(destinatario instanceof Grupo) {              //Se o destinatário for um grupo, faz o mesmo processo descrito na linha 178
+				Grupo g = (Grupo) destinatario;
+				for(Individual ind : g.getIndividuos()) {
+					if(!ind.equals(emitente)) {
+						Mensagem copia = new Mensagem(m.getId(), m.getTexto(), g, ind, m.getDatahora());
+						g.addEnviada(copia);
+						ind.addRecebida(copia);
+					}
+				}
+			}
+		}
 	}
 	
 }

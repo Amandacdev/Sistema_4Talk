@@ -1,0 +1,84 @@
+*******Lendo dados*******
+Verificando os dados:
+
+Individuos
+
+Nome=admin
+ Mensagens enviadas: sem mensagens enviadas
+ Mensagens recebidas: sem mensagens recebidas
+ Grupos: sem grupo
+
+Nome=joao
+ Mensagens enviadas: 
+  --> 1: emitente=joao, destinatario=maria, datahora=20/06/2023 15:24:09, texto=oi maria tudo bem?
+  --> 3: emitente=joao, destinatario=maria, datahora=20/06/2023 15:24:09, texto=vamos fazer juntos?
+  --> 5: emitente=joao, destinatario=joao, datahora=20/06/2023 15:24:09, texto=teste
+  --> 7: emitente=joao, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=obrigado maria
+ Mensagens recebidas: 
+  --> 2: emitente=maria, destinatario=joao, datahora=20/06/2023 15:24:09, texto=tudo bem joao!
+  --> 4: emitente=maria, destinatario=joao, datahora=20/06/2023 15:24:09, texto=vou criar grupo e chamar jose
+  --> 5: emitente=joao, destinatario=joao, datahora=20/06/2023 15:24:09, texto=teste
+  --> 6: emitente=grupo1, destinatario=joao, datahora=20/06/2023 15:24:09, texto=oi pessoal criei o grupo do projeto
+  --> 8: emitente=grupo1, destinatario=joao, datahora=20/06/2023 15:24:09, texto=valeu maria
+  --> 9: emitente=grupo1, destinatario=joao, datahora=20/06/2023 15:24:09, texto=vamos conversar sobre o projeto hoje
+ Grupos: 
+  --> grupo1
+
+Nome=jose
+ Mensagens enviadas: 
+  --> 8: emitente=jose, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=valeu maria
+ Mensagens recebidas: sem mensagens recebidas
+ Grupos: sem grupo
+
+Nome=maria
+ Mensagens enviadas: 
+  --> 2: emitente=maria, destinatario=joao, datahora=20/06/2023 15:24:09, texto=tudo bem joao!
+  --> 4: emitente=maria, destinatario=joao, datahora=20/06/2023 15:24:09, texto=vou criar grupo e chamar jose
+  --> 6: emitente=maria, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=oi pessoal criei o grupo do projeto
+  --> 9: emitente=maria, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=vamos conversar sobre o projeto hoje
+ Mensagens recebidas: 
+  --> 1: emitente=joao, destinatario=maria, datahora=20/06/2023 15:24:09, texto=oi maria tudo bem?
+  --> 3: emitente=joao, destinatario=maria, datahora=20/06/2023 15:24:09, texto=vamos fazer juntos?
+  --> 7: emitente=grupo1, destinatario=maria, datahora=20/06/2023 15:24:09, texto=obrigado maria
+  --> 8: emitente=grupo1, destinatario=maria, datahora=20/06/2023 15:24:09, texto=valeu maria
+ Grupos: 
+  --> grupo1
+
+
+
+Grupos
+
+Nome=grupo1
+ Mensagens enviadas: 
+  --> 6: emitente=grupo1, destinatario=joao, datahora=20/06/2023 15:24:09, texto=oi pessoal criei o grupo do projeto
+  --> 7: emitente=grupo1, destinatario=maria, datahora=20/06/2023 15:24:09, texto=obrigado maria
+  --> 8: emitente=grupo1, destinatario=joao, datahora=20/06/2023 15:24:09, texto=valeu maria
+  --> 8: emitente=grupo1, destinatario=maria, datahora=20/06/2023 15:24:09, texto=valeu maria
+  --> 9: emitente=grupo1, destinatario=joao, datahora=20/06/2023 15:24:09, texto=vamos conversar sobre o projeto hoje
+ Mensagens recebidas: 
+  --> 6: emitente=maria, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=oi pessoal criei o grupo do projeto
+  --> 7: emitente=joao, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=obrigado maria
+  --> 8: emitente=jose, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=valeu maria
+  --> 9: emitente=maria, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=vamos conversar sobre o projeto hoje
+ Individuos do grupo: 
+  --> joao
+  --> maria
+
+Nome=grupo2
+ Mensagens enviadas: sem mensagens enviadas
+ Mensagens recebidas: sem mensagens recebidas
+ Individuos do grupo: vazio
+
+
+
+Mensagens
+
+1: emitente=joao, destinatario=maria, datahora=20/06/2023 15:24:09, texto=oi maria tudo bem?
+2: emitente=maria, destinatario=joao, datahora=20/06/2023 15:24:09, texto=tudo bem joao!
+3: emitente=joao, destinatario=maria, datahora=20/06/2023 15:24:09, texto=vamos fazer juntos?
+4: emitente=maria, destinatario=joao, datahora=20/06/2023 15:24:09, texto=vou criar grupo e chamar jose
+5: emitente=joao, destinatario=joao, datahora=20/06/2023 15:24:09, texto=teste
+6: emitente=maria, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=oi pessoal criei o grupo do projeto
+7: emitente=joao, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=obrigado maria
+8: emitente=jose, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=valeu maria
+9: emitente=maria, destinatario=grupo1, datahora=20/06/2023 15:24:09, texto=vamos conversar sobre o projeto hoje
