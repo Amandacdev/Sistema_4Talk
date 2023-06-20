@@ -44,5 +44,21 @@ public class Individual extends Participante {
 		}
 		return false;
 	}
+
+	@Override
+	public String toString() {
+		String s = super.toString() + "\n Grupos: ";
+		
+		if(grupos.isEmpty())
+			s += "sem grupo";
+		
+		else {
+			for(Grupo g : grupos) {
+				s += "\n  --> " + g.getNome();
+			}
+		}
+		return s;
+	}
+	
 }
 

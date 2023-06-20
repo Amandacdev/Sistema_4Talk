@@ -20,4 +20,21 @@ public class Grupo extends Participante {
 	public void delIndividual(Individual i) {
 		individuos.remove(i);
 	}
+
+	@Override
+	public String toString() {
+		String s = super.toString() + "\n Individuos do grupo: ";
+		
+		if(individuos.isEmpty())
+			s += "vazio";
+		
+		else {
+			for (Individual ind : individuos) {
+				s += "\n  --> " + ind.getNome();
+			}
+		}
+		return s;
+	}
+	
+	
 }

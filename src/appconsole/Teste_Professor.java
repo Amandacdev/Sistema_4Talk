@@ -177,11 +177,16 @@ public class Teste_Professor {
 			for(String nome : Fachada.ausentes("admin"))
 				System.out.println(nome);
 			
+			System.out.println();
 		} catch (Exception e) 	{
 			System.out.println(e.getMessage());
 		}
 
-
+		
+		System.out.println("gravando dados");
+		Fachada.gravarDados();
+		System.out.println("dados gravados\n");
+		
 		System.out.println("fim do programa");
 	}
 }

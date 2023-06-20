@@ -46,4 +46,40 @@ public class Participante {
 	public ArrayList<Mensagem> getEnviadas() {
 		return enviadas;
 	}
+	
+	public Mensagem localizarEnviada(int id) {
+		for (Mensagem m : enviadas) {
+			if(m.getId() == id)
+				return m;
+		}
+		return null;
+	}
+
+	@Override
+	public String toString() {
+		String s = "Nome=" + nome + "\n Mensagens enviadas: ";
+		
+		if(enviadas.isEmpty())
+			s += "sem mensagens enviadas\n";
+		
+		else {
+			for(Mensagem m : enviadas) {
+				s += "\n  --> " + m;
+			}
+			s += "\n";
+		}
+		
+		s += " Mensagens recebidas: ";
+		
+		if(recebidas.isEmpty())
+			s += "sem mensagens recebidas";
+		
+		else {
+			for(Mensagem m : recebidas) {
+				s += "\n  --> " + m;
+			}
+		}
+		return s;
+	}
+	
 }
