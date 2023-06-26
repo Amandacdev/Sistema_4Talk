@@ -1,7 +1,7 @@
 # Sistema 4Talk 💬
 
 ## Tema:
-- Um sistema de chat em que os usuários podem trocar mensagens entre si em conversas individuais ou em grupo.
+- Um sistema de chat em que usuários podem trocar mensagens entre si através de conversas individuais ou em grupo.
 
 ## Equipe:
 - Amanda Cruz de Araújo
@@ -17,7 +17,7 @@
   - Modelo: agrupa as classes de negócio, acessadas a partir do repositório. Possuem os métodos construtores, getters e setters, entre outros.
     - Classes:
       - Participante
-      - Mensnagem
+      - Mensagem
       - Individual
       - Grupo
  
