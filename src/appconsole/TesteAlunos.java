@@ -3,12 +3,11 @@ package appconsole;
 import modelo.*;
 import regras_negocio.*;
 
-public class Teste_Ian {
+public class TesteAlunos {
 	
 	public static void main(String[] args) {	
-		//testando o lerDados()
+		//testando o a leitura dos dados no csv
 		System.out.println("*******Lendo dados*******");
-		Fachada.lerDados();
 		System.out.println("Verificando os dados:\n");
 		
 		System.out.println("Individuos\n");
