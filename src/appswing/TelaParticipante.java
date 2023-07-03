@@ -98,7 +98,7 @@ public class TelaParticipante {
 			}
 		});
 		frame.setTitle("Participantes");
-		frame.setBounds(100, 100, 538, 323);
+		frame.setBounds(100, 100, 563, 334);
 		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 
@@ -181,7 +181,7 @@ public class TelaParticipante {
 
 			}
 		});
-		button.setBounds(435, 220, 74, 23);
+		button.setBounds(436, 220, 74, 23);
 		frame.getContentPane().add(button);
 
 		panel = new JPanel();
@@ -207,7 +207,7 @@ public class TelaParticipante {
 				TelaGerenciarGrupos tela = new TelaGerenciarGrupos();
 			}
 		});
-		gerenciarGrupos.setBounds(401, 259, 137, 29);
+		gerenciarGrupos.setBounds(405, 262, 137, 29);
 		frame.getContentPane().add(gerenciarGrupos);
 		
 		// temporizador

@@ -62,7 +62,7 @@ public class TelaGerenciarGrupos {
 		frameGerenciarGrupos = new JFrame();
 		frameGerenciarGrupos.setResizable(false);
 		frameGerenciarGrupos.setTitle("Gerenciar Grupos");
-		frameGerenciarGrupos.setBounds(100, 100, 538, 323);
+		frameGerenciarGrupos.setBounds(100, 100, 563, 334);
 		frameGerenciarGrupos.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		JPanel panel = new JPanel();
@@ -70,15 +70,15 @@ public class TelaGerenciarGrupos {
 		panel.setLayout(null);
 		
 		JLabel lblSelecioneUmGrupo = new JLabel("Selecione um grupo:");
-		lblSelecioneUmGrupo.setBounds(48, 109, 128, 16);
+		lblSelecioneUmGrupo.setBounds(66, 110, 97, 16);
 		panel.add(lblSelecioneUmGrupo);
 		
 		gruposComboBox = new JComboBox<>();
-		gruposComboBox.setBounds(6, 137, 215, 27);
+		gruposComboBox.setBounds(10, 137, 215, 27);
 		panel.add(gruposComboBox);
 		
 		JLabel lblSelecioneUmIndividuo = new JLabel("Selecione um individuo:");
-		lblSelecioneUmIndividuo.setBounds(340, 109, 150, 16);
+		lblSelecioneUmIndividuo.setBounds(371, 110, 111, 16);
 		panel.add(lblSelecioneUmIndividuo);
 		
 		JPanel panelOperacao = new JPanel();
@@ -100,7 +100,7 @@ public class TelaGerenciarGrupos {
 		grupobotoes.add(radioRemover);
 		
 		individuosComboBox = new JComboBox<>();
-		individuosComboBox.setBounds(317, 137, 215, 27);
+		individuosComboBox.setBounds(322, 137, 215, 27);
 		panel.add(individuosComboBox);
 		
 		JLabel lblMensagem = new JLabel("");
