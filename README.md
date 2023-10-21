@@ -1,4 +1,4 @@
-# Sistema 4Talk 💬
+# 4Talk 💬
 
 ## Tema:
 - Um sistema de chat em que usuários podem trocar mensagens entre si através de conversas individuais ou em grupo.
